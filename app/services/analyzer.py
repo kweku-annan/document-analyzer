@@ -88,6 +88,7 @@ Respond ONLY with valid JSON in this exact format (no markdown, no code blocks):
         try:
             # Make async HTTP request to OpenRouter API
             async with httpx.AsyncClient(timeout=60.0) as client:
+                # print("making request to OpenRouter API...")
                 response = await client.post(
                     f"{self.base_url}/chat/completions",
                     headers=headers,
@@ -101,6 +102,7 @@ Respond ONLY with valid JSON in this exact format (no markdown, no code blocks):
 
                 # Parse response
                 response_data = response.json()
+                # print(f"OpenRouter API response: {response_data}")
 
                 # Extract the AI's message
                 if "choices" not in response_data or len(response_data["choices"]) == 0:
@@ -108,8 +110,11 @@ Respond ONLY with valid JSON in this exact format (no markdown, no code blocks):
 
                 ai_message = response_data["choices"][0]["message"]["content"]
 
+
                 # Parse JSON response from AI
                 analysis_result = self._parse_ai_response(ai_message)
+
+                # print(f"Analysis result: {analysis_result}")
 
                 return analysis_result
 
@@ -152,6 +157,12 @@ Respond ONLY with valid JSON in this exact format (no markdown, no code blocks):
                 raise ValueError("Missing 'document_type' filed in AI response")
             if "metadata" not in result:
                 result["metadata"] = {}
+
+            return {
+                "summary": result["summary"],
+                "document_type": result["document_type"],
+                "metadata": result["metadata"],
+            }
 
         except json.JSONDecodeError as e:
             return {

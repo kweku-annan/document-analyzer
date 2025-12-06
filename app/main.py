@@ -213,7 +213,10 @@ async def analyze_document(document_id: int, db: Session = Depends(get_db)):
 
     try:
         # 4. Analyze document using AI service
+        # print("Sending document to analyzer service...")
+        # print(document.extracted_text)
         analysis_result = await analyzer_service.analyze_document(document.extracted_text)
+        # print(analysis_result)
 
         # 5. Update document in database
         document.summary = analysis_result["summary"]
