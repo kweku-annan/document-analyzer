@@ -27,6 +27,23 @@ class DocumentAnalysisResponse(BaseModel):
         from_attributes = True
 
 
+class DocumentDetailResponse(BaseModel):
+    """Complete document information"""
+    id: int
+    filename: str
+    file_type: str
+    file_size: int
+    file_path: str
+    extracted_text: Optional[str] = None
+    summary: Optional[str] = None
+    document_type: Optional[str] = None
+    document_metadata: Optional[Dict[str, Any]] = None
+    is_analyzed: str
+    analysis_error: Optional[str] = None
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+
+
 class ErrorResponse(BaseModel):
     """Standard error response model."""
     detail: str
