@@ -32,7 +32,7 @@ class Document(Base):
     # AI analysis results
     summary = Column(Text, nullable=True)   # AI-generated summary of the document
     document_type = Column(String(100), nullable=True)
-    metadata = Column(JSON, nullable=True)  # Additional metadata extracted by AI (date, sender, amount, etc.)
+    result_metadata = Column(JSON, nullable=True)  # Additional metadata extracted by AI (date, sender, amount, etc.)
 
     # Analysis status
     is_analyzed = Column(String(20), default="pending") # 'pending', 'completed', 'failed'
