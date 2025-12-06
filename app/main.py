@@ -225,7 +225,7 @@ async def analyze_document(document_id: int, db: Session = Depends(get_db)):
         document.is_analyzed = "completed"
         document.analysis_error = None
 
-        db.query()
+        db.commit()
         db.refresh(document)
 
         return DocumentAnalysisResponse(
