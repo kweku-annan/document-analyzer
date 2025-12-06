@@ -37,7 +37,7 @@ app = FastAPI(
     }
 )
 async def upload_document(
-        file: UploadFile = File(..., description="PDF or DOCX file to upload (max 10MB)"),
+        file: UploadFile = File(..., description="PDF or DOCX file to upload (max 5MB)"),
         db: Session = Depends(get_db),
 ):
     """
