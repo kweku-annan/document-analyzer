@@ -5,3 +5,6 @@ uploads/
 *.pyc
 __pycache__/
 .DS_Store
+test_app.py
+test_upload.py
+app/__pycache__/models.

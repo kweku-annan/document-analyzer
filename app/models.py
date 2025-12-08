@@ -1,7 +1,4 @@
-from typing import Self
-
-from sqlalchemy import Column, Integer, String, Text, DateTime, Float, JSON
-from sqlalchemy.orm import InstanceState
+from sqlalchemy import Column, Integer, String, Text, DateTime, JSON
 from sqlalchemy.sql import func
 from app.database import Base
 
@@ -41,6 +38,7 @@ class Document(Base):
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
 
     def __repr__(self):
         return f"<Document(id={self.id}, filename='{self.filename}', file_type='{self.file_type}', is_analyzed='{self.is_analyzed}')>"

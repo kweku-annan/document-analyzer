@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import lru_cache
 
 
@@ -7,11 +7,11 @@ class Settings(BaseSettings):
     """Application setting loaded from environment variables"""
 
     # Database settings
-    DATABASE_URL: str
+    database_url: str
 
     # Storage
-    upload_dir: str = "uploads/" # Local storage directory for uploaded files
-    MAX_FILE_SIZE_MB: int
+    upload_dir: str = "uploads"  # Local storage directory for uploaded files
+    max_file_size_mb: int = 5242880
 
     # OpenRouter API
     openrouter_api_key: str
@@ -23,15 +23,21 @@ class Settings(BaseSettings):
     debug: bool = True
 
     # Storage (Minio)
-    S3_ENDPOINT: str
-    S3_ACCESS_KEY: str
-    S3_SECRET_KEY: str
-    S3_BUCKET_NAME: str
+    # Minio/S3 Configuration
+    s3_endpoint_url: str = "http://localhost:9000"
+    s3_access_key: str = "minioadmin"
+    s3_secret_key: str = "minioadmin"
+    s3_bucket_name: str = "documents"
+    s3_region: str = "us-east-1"
+    s3_use_ssl: bool = False
+    storage_type: str = "minio"
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore"
+    )
 
 @lru_cache()
 def get_settings() -> Settings:

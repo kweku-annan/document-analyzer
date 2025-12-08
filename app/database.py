@@ -7,7 +7,7 @@ settings = get_settings()
 
 # Create database engine
 engine = create_engine(
-    settings.DATABASE_URL,
+    settings.database_url,
     echo=settings.debug, # Log SQL queries if in debug mode
     pool_pre_ping=True, # Verify connections before using them
 )
